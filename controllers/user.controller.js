@@ -1,12 +1,13 @@
 const { User } = require("../models");
 const dotenv = require("dotenv");
 const bcrypt = require("bcryptjs");
-const redisClient = require("../config/redisClient");
+const { getRedisClient } = require("../config/redisClient");
 
 dotenv.config();
 
 const compareOTP = async (email, otpEntered) => {
-  const storedOtpHash = await redisClient.get(email);
+  const redis = await getRedisClient();
+  const storedOtpHash = await redis.get(email);
 
   if (!storedOtpHash) {
     return { success: false, message: "OTP has expired" };

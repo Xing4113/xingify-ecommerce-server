@@ -3,13 +3,14 @@ const { Op } = require("sequelize");
 const { setJWTToken } = require("../utils/jwt.utils");
 const bcrypt = require("bcryptjs");
 const emailUtils = require("../utils/email.utils");
-const redisClient = require("../config/redisClient");
+const { getRedisClient } = require("../config/redisClient");
 const dotenv = require("dotenv");
 
 dotenv.config();
 
 const compareOTP = async (email, otpEntered) => {
-  const storedOtpHash = await redisClient.get(email);
+  const redis = await getRedisClient();
+  const storedOtpHash = await redis.get(email);
 
   if (!storedOtpHash) {
     return { success: false, message: "OTP has expired" };
@@ -122,11 +123,11 @@ exports.passwordLogin = async (req, res) => {
 exports.sendOtp = async (req, res) => {
   try {
     const { email } = req.body;
-
-    const otp = Math.floor(100000 + Math.random() * 900000).toString(); // Generate 6-digit OTP
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
     const hashedOtp = await bcrypt.hash(otp, 10);
 
-    await redisClient.setEx(email, 600, hashedOtp); // Store OTP for 10 minutes
+    const redis = await getRedisClient();
+    await redis.setEx(email, 600, hashedOtp); // expires in 10 min
 
     emailUtils.sendOtpEmail(email, otp);
 
