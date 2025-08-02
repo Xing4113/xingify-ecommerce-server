@@ -187,13 +187,11 @@ exports.googleLogin = async (req, res) => {
     }
 
     setJWTToken(res, user.user_id, user.email);
-    res.redirect(process.env.FRONTEND_URL || "http://localhost:3000");
+    res.redirect(process.env.CLIENT_URL || "http://localhost:3000");
   } catch (err) {
     console.error("googleLogin error:", err);
     res.redirect(
-      `${
-        process.env.FRONTEND_URL || "http://localhost:3000"
-      }/login?error=social`
+      `${process.env.CLIENT_URL || "http://localhost:3000"}/login?error=social`
     );
   }
 };
@@ -223,13 +221,11 @@ exports.facebookLogin = async (req, res) => {
     }
 
     setJWTToken(res, user.user_id, user.email);
-    res.redirect(process.env.FRONTEND_URL || "http://localhost:3000");
+    res.redirect(process.env.CLIENT_URL || "http://localhost:3000");
   } catch (err) {
     console.error("facebookLogin error:", err);
     res.redirect(
-      `${
-        process.env.FRONTEND_URL || "http://localhost:3000"
-      }/login?error=social`
+      `${process.env.CLIENT_URL || "http://localhost:3000"}/login?error=social`
     );
   }
 };

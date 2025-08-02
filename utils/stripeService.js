@@ -38,10 +38,8 @@ const createStripeCheckoutSession = async (items, deliveryFee, metadata) => {
     mode: "payment",
     line_items: lineItems,
     metadata,
-    success_url:
-      "http://localhost:3000/payment/success?session_id={CHECKOUT_SESSION_ID}",
-    cancel_url:
-      "http://localhost:3000/payment/cancel?session_id={CHECKOUT_SESSION_ID}",
+    success_url: `${process.env.CLIENT_URL}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${process.env.CLIENT_URL}/payment/cancel?session_id={CHECKOUT_SESSION_ID}`,
   });
 
   return session;
