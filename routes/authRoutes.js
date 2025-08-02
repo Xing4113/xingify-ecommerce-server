@@ -23,25 +23,26 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    failureRedirect: "http://localhost:3000/login",
+    failureRedirect: `${process.env.CLIENT_URL}/login`,
     session: false,
   }),
   authController.googleLogin
 );
 
-// Facebook OAuth Login
 router.get(
   "/facebook",
-  passport.authenticate("facebook", { scope: ["email"], session: false })
+  passport.authenticate("facebook", {
+    scope: ["email"],
+    session: false,
+  })
 );
 
 router.get(
   "/facebook/callback",
   passport.authenticate("facebook", {
-    failureRedirect: "http://localhost:3000/login", // Frontend login page
+    failureRedirect: `${process.env.CLIENT_URL}/login`,
     session: false,
   }),
   authController.facebookLogin
 );
-
 module.exports = router;
