@@ -57,12 +57,10 @@ exports.getUserProfile = async (req, res) => {
 exports.logoutUser = (req, res) => {
   res.clearCookie("jwtToken", {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
+    secure: true,
+    sameSite: "none",
     path: "/",
-    expires: new Date(0), // 👈 expire immediately
   });
-
   res.status(200).json({ message: "Logged out successfully" });
 };
 
