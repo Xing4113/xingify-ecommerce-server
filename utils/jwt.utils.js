@@ -12,8 +12,8 @@ exports.setJWTToken = (res, user_id, email) => {
 
   res.cookie("jwtToken", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    secure: true,
+    sameSite: "none",
     maxAge: tokenExpirationInSec * 1000,
   });
 };
