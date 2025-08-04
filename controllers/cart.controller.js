@@ -1,4 +1,10 @@
-const { Cart, Product, ProductVariant, sequelize } = require("../models");
+const {
+  Cart,
+  Product,
+  ProductVariant,
+  ProductImage,
+  sequelize,
+} = require("../models");
 
 exports.showCart = async (req, res) => {
   const userId = req.user?.id;
@@ -16,6 +22,14 @@ exports.showCart = async (req, res) => {
         {
           model: Product,
           as: "product",
+          include: [
+            {
+              model: ProductImage,
+              as: "images",
+              where: { isThumbnail: true },
+              required: false,
+            },
+          ],
         },
       ],
     });
