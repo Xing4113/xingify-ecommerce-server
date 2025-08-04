@@ -102,10 +102,14 @@ exports.passwordLogin = async (req, res) => {
       return res.status(400).json({ message: "User not found" });
     }
 
+    if (!user.password) {
+      return res.status(400).json({ message: "Incorrect password" });
+    }
+
     // Compare passwords
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: "Invalid password" });
+      return res.status(400).json({ message: "Incorrect password" });
     }
 
     setJWTToken(res, user.user_id, user.email);
