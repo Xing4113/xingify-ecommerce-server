@@ -57,7 +57,7 @@ exports.getUserProfile = async (req, res) => {
 exports.logoutUser = (req, res) => {
   res.clearCookie("jwtToken", {
     httpOnly: true,
-    secure: true,
+    secure: false,
     sameSite: "none",
     path: "/",
   });
