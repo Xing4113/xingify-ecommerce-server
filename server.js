@@ -17,23 +17,19 @@ const orderRoutes = require("./routes/orderRoutes");
 const stripeRoutes = require("./routes/stripeRoutes");
 const emailSubscriptionRoutes = require("./routes/emailSubscriptionRoutes");
 const sequelize = require("./config/db");
-const { getRedisClient } = require("./config/redisClient");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
+app.use(cookieParser());
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "https://zingy-cobbler-bfe33f.netlify.app",
-      `http://192.168.0.180:3000`,
-    ],
+    origin: ["http://localhost:3000", process.env.CLIENT_URL],
     credentials: true,
   })
 );
-app.use(cookieParser());
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "your_secret",
