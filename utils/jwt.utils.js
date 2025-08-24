@@ -12,9 +12,8 @@ exports.setJWTToken = (res, user_id, email) => {
 
   res.cookie("jwtToken", token, {
     httpOnly: true,
-    secure: true,
-    sameSite: "none",
-    path: "/",
+    secure: false,
+    sameSite: "lax",
     maxAge: tokenExpirationInSec * 1000,
   });
 };
