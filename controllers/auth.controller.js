@@ -2,7 +2,7 @@ const { User } = require("../models");
 const { Op } = require("sequelize");
 const { setJWTToken } = require("../utils/jwt.utils");
 const bcrypt = require("bcryptjs");
-const emailUtils = require("../utils/email.utils");
+const emailServiceUtils = require("../utils/emailService.utils");
 const { getRedisClient } = require("../config/redisClient");
 const dotenv = require("dotenv");
 
@@ -133,7 +133,7 @@ exports.sendOtp = async (req, res) => {
     const redis = await getRedisClient();
     await redis.setEx(email, 600, hashedOtp); // expires in 10 min
 
-    emailUtils.sendOtpEmail(email, otp);
+    emailServiceUtils.sendOtpEmail(email, otp);
 
     return res.status(200).json({ message: "OTP sent to email" });
   } catch (e) {
