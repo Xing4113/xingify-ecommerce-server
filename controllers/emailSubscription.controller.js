@@ -1,5 +1,5 @@
 const { EmailSubscription } = require("../models");
-const { sendSuccessEmailSubscription } = require("../utils/email.utils");
+const { sendSuccessEmailSubscription } = require("../utils/emailService.utils");
 
 exports.addEmailSubscription = async (req, res) => {
   try {
