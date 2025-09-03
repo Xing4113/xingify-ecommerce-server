@@ -5,23 +5,12 @@ let client;
 
 const getRedisClient = async () => {
   if (!process.env.REDIS_URL) {
-    console.warn("⚠️ No REDIS_URL provided — skipping Redis connection.");
+    console.warn("No REDIS_URL provided — skipping Redis connection.");
     return {
       get: async () => null,
       set: async () => null,
       del: async () => null,
       // Add other stubbed Redis methods as needed
-    };
-  }
-
-  if (process.env.NODE_ENV === "production") {
-    console.log(
-      "ℹ️ Redis intentionally disabled in production to avoid Fly.io billing trigger."
-    );
-    return {
-      get: async () => null,
-      set: async () => null,
-      del: async () => null,
     };
   }
 
