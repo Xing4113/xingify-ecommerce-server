@@ -8,7 +8,9 @@ dotenv.config();
 
 // Create a transport instance
 const transporter = nodemailer.createTransport({
-  service: "gmail", // Or use your email provider (e.g., SendGrid, SES)
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
   auth: {
     user: process.env.GMAIL_USER,
     pass: process.env.GMAIL_PASS,
